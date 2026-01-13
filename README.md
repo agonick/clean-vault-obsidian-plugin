@@ -40,3 +40,7 @@ To install this plugin manually in your Obsidian Vault:
 ## Development
 1.  `npm install`
 2.  `npm run build`
+
+## Testing
+1.  `npm run test`
+
