@@ -1,0 +1,10 @@
+{
+  "id": "clean-vault",
+  "name": "Clean Vault",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Automatically deletes files that are left empty when switching away from them.",
+  "author": "agonick",  
+  "authorUrl": "https://github.com/agonick/obsidian-plugin-delete-empty-files",
+  "isDesktopOnly": false
+}
