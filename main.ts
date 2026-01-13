@@ -1,6 +1,6 @@
 import { Plugin, TFile, WorkspaceLeaf } from 'obsidian';
 
-export default class CleanVaultPlugin extends Plugin {
+export class CleanVaultPlugin extends Plugin {
     lastActiveFile: TFile | null = null;
 
     async onload() {
@@ -38,3 +38,5 @@ export default class CleanVaultPlugin extends Plugin {
     }
     
 }
+
+export default CleanVaultPlugin;
