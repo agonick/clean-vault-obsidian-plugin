@@ -22,10 +22,10 @@ To install this plugin manually in your Obsidian Vault:
     *   Navigate to `.obsidian/plugins/`.
 
 2.  **Create the plugin folder**:
-    *   Create a new folder named `delete-empty-files` inside `.obsidian/plugins/`.
+    *   Create a new folder named `clean-vault` inside `.obsidian/plugins/`.
 
 3.  **Copy files**:
-    *   Copy `main.js` and `manifest.json` from this project into the new `delete-empty-files` folder.
+    *   Copy `main.js` and `manifest.json` from this project into the new `clean-vault` folder.
 
 4.  **Enable the plugin**:
     *   Open Obsidian.
