@@ -2,10 +2,10 @@
   "name": "obsidian-delete-empty-files",
   "version": "1.0.0",
   "description": "Automatically deletes files that are left empty when switching away from them.",
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
-    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "build": "tsc && node esbuild.config.mjs production",
     "test": "vitest run"
   },
   "keywords": [
@@ -15,13 +15,13 @@
   "author": "agonick",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^4.0.17",
     "builtin-modules": "^3.3.0",
     "esbuild": "^0.27.2",
     "obsidian": "latest",
     "tslib": "2.4.0",
-    "typescript": "^5.0.0",
+    "typescript": "^5.7.0",
     "vitest": "^4.0.17"
   }
 }
