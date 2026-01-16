@@ -2,24 +2,23 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CleanVaultPlugin } from '../main';
 import { App, PluginManifest, TFile } from 'obsidian';
 
-
 describe('CleanVaultPlugin', () => {
-  let plugin: any;
+  let plugin: CleanVaultPlugin;
+  let mockApp: any;
+  const mockManifest = {};
 
   beforeEach(() => {
     vi.clearAllMocks();
-    const mockApp: any = {
+    mockApp = {
       workspace: {
         getActiveFile: vi.fn(),
-        on: vi.fn(),
+        on: vi.fn()
       },
       vault: {
         read: vi.fn(),
-        trash: vi.fn(),
-        getAbstractFileByPath: vi.fn(),
+        trash: vi.fn()
       }
     };
-    const mockManifest = {};
     plugin = new CleanVaultPlugin(mockApp as App, mockManifest as PluginManifest);
   });
 
@@ -28,12 +27,11 @@ describe('CleanVaultPlugin', () => {
     mockFile.path = 'empty.md';
     
     plugin.lastActiveFile = mockFile;
-    plugin.app.vault.getAbstractFileByPath.mockReturnValue(mockFile);
-    plugin.app.vault.read.mockResolvedValue('');
+    mockApp.vault.read.mockResolvedValue('');
 
     await plugin.checkAndDeletePreviousFile();
 
-    expect(plugin.app.vault.trash).toHaveBeenCalledWith(mockFile, false);
+    expect(mockApp.vault.trash).toHaveBeenCalledWith(mockFile, false);
   });
 
   it('should delete a file if it contains only whitespace', async () => {
@@ -41,12 +39,11 @@ describe('CleanVaultPlugin', () => {
     mockFile.path = 'whitespace.md';
     
     plugin.lastActiveFile = mockFile;
-    plugin.app.vault.getAbstractFileByPath.mockReturnValue(mockFile);
-    plugin.app.vault.read.mockResolvedValue('   \n  ');
+    mockApp.vault.read.mockResolvedValue('   \n  ');
 
     await plugin.checkAndDeletePreviousFile();
 
-    expect(plugin.app.vault.trash).toHaveBeenCalledWith(mockFile, false);
+    expect(mockApp.vault.trash).toHaveBeenCalledWith(mockFile, false);
   });
 
   it('should NOT delete a file if it has content', async () => {
@@ -54,12 +51,11 @@ describe('CleanVaultPlugin', () => {
     mockFile.path = 'content.md';
     
     plugin.lastActiveFile = mockFile;
-    plugin.app.vault.getAbstractFileByPath.mockReturnValue(mockFile);
-    plugin.app.vault.read.mockResolvedValue('Hello World');
+    mockApp.vault.read.mockResolvedValue('Hello World');
 
     await plugin.checkAndDeletePreviousFile();
 
-    expect(plugin.app.vault.trash).not.toHaveBeenCalled();
+    expect(mockApp.vault.trash).not.toHaveBeenCalled();
   });
 
   it('should NOT delete if the file reference is null', async () => {
@@ -67,18 +63,18 @@ describe('CleanVaultPlugin', () => {
 
     await plugin.checkAndDeletePreviousFile();
 
-    expect(plugin.app.vault.trash).not.toHaveBeenCalled();
+    expect(mockApp.vault.trash).not.toHaveBeenCalled();
   });
 
-  it('should NOT delete if the file no longer exists in vault', async () => {
+  it('should handle file read errors gracefully', async () => {
     const mockFile = new TFile();
     mockFile.path = 'deleted.md';
     
     plugin.lastActiveFile = mockFile;
-    plugin.app.vault.getAbstractFileByPath.mockReturnValue(null);
+    mockApp.vault.read.mockRejectedValue(new Error('File not found'));
 
     await plugin.checkAndDeletePreviousFile();
 
-    expect(plugin.app.vault.trash).not.toHaveBeenCalled();
+    expect(mockApp.vault.trash).not.toHaveBeenCalled();
   });
 });
