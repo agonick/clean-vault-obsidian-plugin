@@ -21,10 +21,6 @@ export class CleanVaultPlugin extends Plugin {
         if (!file || !(file instanceof TFile)) {
             return;
         }
-        const existingFile = this.app.vault.getAbstractFileByPath(file.path);
-        if (!existingFile) {
-            return;
-        }
 
         try {
             const content = await this.app.vault.read(file);
