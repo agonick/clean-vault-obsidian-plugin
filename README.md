@@ -44,3 +44,7 @@ To install this plugin manually in your Obsidian Vault:
 ## Testing
 1.  `npm run test`
 
+
+## AI Disclaimer
+This project was kickstarted and developed with the help of Antigravity, demonstrating how it is possible to achieve great things with human creativity and machine interaction.
+
